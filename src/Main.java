@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class Main implements ActionListener {
 
-    private JFrame frame = new JFrame("Pete's Work Tracker");
+    private final JFrame frame = new JFrame("Pete's Work Tracker");
 
     public Main() {
         createAndShowGUI();
@@ -17,12 +17,12 @@ public class Main implements ActionListener {
         DailyLogPanel dailyLogPanel = new DailyLogPanel();
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("_File");
+        JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
 
-        JMenuItem filePanel1 = new JMenuItem("Panel_1");
-        JMenuItem filePanel2 = new JMenuItem("Panel_2");
+        JMenuItem filePanel1 = new JMenuItem("Panel 1");
+        JMenuItem filePanel2 = new JMenuItem("Start Stop");
         filePanel1.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
         filePanel1.getAccessibleContext().setAccessibleDescription(
@@ -50,11 +50,11 @@ public class Main implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand() == "Panel_1"){
+        if (e.getActionCommand().equals("Panel_1")){
             frame.getContentPane().removeAll();
             frame.setContentPane(new DailyLogPanel());
             frame.revalidate();
-        } else if (e.getActionCommand() == "Panel_2") {
+        } else if (e.getActionCommand().equals("Start Stop")) {
             frame.getContentPane().removeAll();
             frame.setContentPane(new StartStopPanel());
             frame.revalidate();
@@ -62,10 +62,6 @@ public class Main implements ActionListener {
     }
 
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Main();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(() -> new Main());
     }
 }

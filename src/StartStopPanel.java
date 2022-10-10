@@ -3,15 +3,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
 public class StartStopPanel extends JPanel implements ActionListener {
 
-    private Date start;
-    private Date stop;
+    private Date start = new Date();
+    private final JTextField customerName;
+    private final JTextArea notes;
+
 
     public StartStopPanel() {
         super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -28,7 +28,7 @@ public class StartStopPanel extends JPanel implements ActionListener {
         JLabel customerNameLabel = new JLabel("Customer Name", JLabel.TRAILING);
         customerBox.add(customerNameLabel);
 
-        JTextField customerName = new JTextField(25);
+        customerName = new JTextField(25);
         customerNameLabel.setLabelFor(customerName);
 
         customerBox.add(customerName);
@@ -45,7 +45,7 @@ public class StartStopPanel extends JPanel implements ActionListener {
 
         add(buttonBox);
 
-        JTextArea notes = new JTextArea(10, 100);
+        notes = new JTextArea(10, 100);
         notes.setLineWrap(true);
         add(notes);
 
@@ -65,13 +65,17 @@ public class StartStopPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         System.out.println(e.getActionCommand());
-        if (e.getActionCommand() == "Start") {
-            System.out.println("Yeah, do it again.");
+        if (e.getActionCommand().equals("Start")) {
+            start = new Date();
+            System.out.println(start);
         }
-        if (e.getActionCommand() == "Stop") {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
-            System.out.println(dtf.format(now));
+        if (e.getActionCommand().equals("Stop")) {
+            Date stop = new Date();
+            System.out.println("Start: " + start + " Stop: " + stop);
+            System.out.println("Time spent: " + (stop.getTime() - start.getTime()));
+            System.out.println("Customer Name: " + customerName.getText());
+            System.out.println("Notes: " + notes.getText());
+
         }
     }
 }
