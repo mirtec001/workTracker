@@ -21,23 +21,32 @@ public class Main implements ActionListener {
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
 
-        JMenuItem filePanel1 = new JMenuItem("Panel 1");
-        JMenuItem filePanel2 = new JMenuItem("Start Stop");
-        filePanel1.setAccelerator(KeyStroke.getKeyStroke(
+        JMenuItem summaryPanel = new JMenuItem("Panel 1");
+        JMenuItem daily = new JMenuItem("Daily Log");
+        JMenuItem startStopPanel = new JMenuItem("Start Stop");
+
+        summaryPanel.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        filePanel1.getAccessibleContext().setAccessibleDescription(
-                "Switch to panel 1");
+        summaryPanel.getAccessibleContext().setAccessibleDescription(
+                "Switch to summary panel");
 
-        filePanel2.setAccelerator(KeyStroke.getKeyStroke(
+        daily.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        filePanel2.getAccessibleContext().setAccessibleDescription(
-                "Switch to panel 1");
+        daily.getAccessibleContext().setAccessibleDescription(
+                "Switch to daily panel");
 
-        filePanel1.addActionListener(this);
-        filePanel2.addActionListener(this);
+        startStopPanel.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_3, ActionEvent.ALT_MASK));
+        startStopPanel.getAccessibleContext().setAccessibleDescription(
+                "Switch to start stop pane");
 
-        fileMenu.add(filePanel1);
-        fileMenu.add(filePanel2);
+        summaryPanel.addActionListener(this);
+        daily.addActionListener(this);
+        startStopPanel.addActionListener(this);
+
+        fileMenu.add(summaryPanel);
+        fileMenu.add(daily);
+        fileMenu.add(startStopPanel);
 
 
         frame.add(dailyLogPanel);
@@ -50,13 +59,19 @@ public class Main implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Panel_1")){
+        System.out.println(e.getActionCommand());
+
+        if (e.getActionCommand().equals("Panel_1")) {
             frame.getContentPane().removeAll();
             frame.setContentPane(new DailyLogPanel());
             frame.revalidate();
         } else if (e.getActionCommand().equals("Start Stop")) {
             frame.getContentPane().removeAll();
             frame.setContentPane(new StartStopPanel());
+            frame.revalidate();
+        } else if (e.getActionCommand().equals("Daily Log")) {
+            frame.getContentPane().removeAll();
+            frame.setContentPane(new DailyStatus());
             frame.revalidate();
         }
     }
