@@ -16,6 +16,8 @@ public class Main implements ActionListener {
 
         DailyLogPanel dailyLogPanel = new DailyLogPanel();
 
+        frame.setDefaultLookAndFeelDecorated(true);
+
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -24,6 +26,7 @@ public class Main implements ActionListener {
         JMenuItem summaryPanel = new JMenuItem("Panel 1");
         JMenuItem daily = new JMenuItem("Daily Log");
         JMenuItem startStopPanel = new JMenuItem("Start Stop");
+        JMenuItem quit = new JMenuItem("Quit");
 
         summaryPanel.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -40,16 +43,22 @@ public class Main implements ActionListener {
         startStopPanel.getAccessibleContext().setAccessibleDescription(
                 "Switch to start stop pane");
 
+        quit.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.META_MASK));
+
         summaryPanel.addActionListener(this);
         daily.addActionListener(this);
         startStopPanel.addActionListener(this);
+        quit.addActionListener(this);
 
         fileMenu.add(summaryPanel);
         fileMenu.add(daily);
         fileMenu.add(startStopPanel);
+        fileMenu.addSeparator();
+        fileMenu.add(quit);
 
-
-        frame.add(dailyLogPanel);
+        frame.setLayout(new BorderLayout());
+        frame.add(dailyLogPanel, BorderLayout.CENTER);
         frame.setJMenuBar(menuBar);
 
         frame.pack();
@@ -73,6 +82,8 @@ public class Main implements ActionListener {
             frame.getContentPane().removeAll();
             frame.setContentPane(new DailyStatus());
             frame.revalidate();
+        } else if (e.getActionCommand().equals("Quit")) {
+            frame.dispose();
         }
     }
 
